@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(home: TodoScreen());
@@ -10,6 +12,8 @@ class MyApp extends StatelessWidget {
 }
 
 class TodoScreen extends StatefulWidget {
+  const TodoScreen({super.key});
+
   @override
   State<StatefulWidget> createState() => _TodoScreenState();
 }
@@ -17,7 +21,7 @@ class TodoScreen extends StatefulWidget {
 class _TodoScreenState extends State<TodoScreen> {
   final _controller = TextEditingController();
 
-  List<String> _task = [];
+  final List<String> _task = [];
 
   void _addTask() {
     if (_controller.text.trim().isNotEmpty) {
