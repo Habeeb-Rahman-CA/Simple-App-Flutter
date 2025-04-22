@@ -34,6 +34,43 @@ class _TodoScreenState extends State<TodoScreen> {
     });
   }
 
+  void _editTask(int index) {
+    _controller.text = _task[index];
+    showDialog(
+      context: context,
+      builder:
+          (_) => AlertDialog(
+            title: Text("Edit Task"),
+            content: TextField(
+              controller: _controller,
+              autofocus: true,
+              decoration: InputDecoration(hintText: 'Update Task'),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  _controller.clear();
+                },
+                child: Text('cancel'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (_controller.text.trim().isNotEmpty) {
+                    setState(() {
+                      _task[index] = _controller.text.trim();
+                      _controller.clear();
+                    });
+                    Navigator.pop(context);
+                  }
+                },
+                child: Text('Update'),
+              ),
+            ],
+          ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,9 +96,18 @@ class _TodoScreenState extends State<TodoScreen> {
                 itemBuilder:
                     (_, index) => ListTile(
                       title: Text(_task[index]),
-                      trailing: IconButton(
-                        onPressed: () => _deleteTask(index),
-                        icon: Icon(Icons.delete),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            onPressed: () => _deleteTask(index),
+                            icon: Icon(Icons.delete),
+                          ),
+                          IconButton(
+                            onPressed: () => _editTask(index),
+                            icon: Icon(Icons.edit),
+                          ),
+                        ],
                       ),
                     ),
               ),
